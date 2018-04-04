@@ -1,0 +1,5 @@
+.git
+.godeps
+pkg/*
+summon-aws-secrets
+junit.xml
