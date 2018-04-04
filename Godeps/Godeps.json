@@ -1,0 +1,196 @@
+{
+	"ImportPath": "github.com/cyberark/summon-aws",
+	"GoVersion": "go1.8",
+	"GodepVersion": "v80",
+	"Deps": [
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/awserr",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/awsutil",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/client",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/client/metadata",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/corehandlers",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/credentials",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/credentials/ec2rolecreds",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/credentials/endpointcreds",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/credentials/stscreds",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/defaults",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/ec2metadata",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/endpoints",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/request",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/session",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws/signer/v4",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/sdkio",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/sdkrand",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/shareddefaults",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/private/protocol",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/private/protocol/json/jsonutil",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/private/protocol/jsonrpc",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/private/protocol/query",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/private/protocol/query/queryutil",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/private/protocol/rest",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/private/protocol/xml/xmlutil",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/service/secretsmanager",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/service/sts",
+			"Comment": "v1.13.28-1-gaca27d2",
+			"Rev": "aca27d26bd47540c95de6312c970f2727bd3e268"
+		},
+		{
+			"ImportPath": "github.com/go-ini/ini",
+			"Comment": "v1.34.0",
+			"Rev": "5e9692864e22d02ac79e2fa499cffb00520b4fea"
+		},
+		{
+			"ImportPath": "github.com/gopherjs/gopherjs/js",
+			"Rev": "444abdf920945de5d4a977b572bcc6c674d1e4eb"
+		},
+		{
+			"ImportPath": "github.com/jmespath/go-jmespath",
+			"Comment": "0.2.2-22-gc2b33e8",
+			"Rev": "c2b33e8439af944379acbdd9c3a5fe0bc44bd8a5"
+		},
+		{
+			"ImportPath": "github.com/jtolds/gls",
+			"Comment": "v4.2.1",
+			"Rev": "77f18212c9c7edc9bd6a33d383a7b545ce62f064"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/assertions",
+			"Comment": "1.8.1",
+			"Rev": "0b37b35ec7434b77e77a4bb29b79677cced992ea"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/assertions/internal/go-render/render",
+			"Comment": "1.8.1",
+			"Rev": "0b37b35ec7434b77e77a4bb29b79677cced992ea"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/assertions/internal/oglematchers",
+			"Comment": "1.8.1",
+			"Rev": "0b37b35ec7434b77e77a4bb29b79677cced992ea"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/convey",
+			"Comment": "1.6.3-2-ge5b2b7c",
+			"Rev": "e5b2b7c9111590d019a696c7800593f666e1a7f4"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/convey/gotest",
+			"Comment": "1.6.3-2-ge5b2b7c",
+			"Rev": "e5b2b7c9111590d019a696c7800593f666e1a7f4"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/convey/reporting",
+			"Comment": "1.6.3-2-ge5b2b7c",
+			"Rev": "e5b2b7c9111590d019a696c7800593f666e1a7f4"
+		}
+	]
+}
