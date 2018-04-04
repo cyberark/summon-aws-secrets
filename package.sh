@@ -25,7 +25,3 @@ echo "==> Checksumming..."
 pushd output/dist
 shasum -a256 * > SHA256SUMS.txt
 popd
-
-export AWS_ACCESS_KEY_ID=AKIAJUOXDVEEWZTTTFQQ
-export AWS_SECRET_ACCESS_KEY=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
-export AWS_REGION=us-west-1
