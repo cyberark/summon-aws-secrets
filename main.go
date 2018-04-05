@@ -5,6 +5,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/secretsmanager"
+	"github.com/aws/aws-sdk-go/aws"
 )
 
 func RetrieveSecret(variableName string) {
@@ -13,7 +14,12 @@ func RetrieveSecret(variableName string) {
 	// Session should be shared where possible to take advantage of
 	// configuration and credential caching. See the session package for
 	// more information.
-	sess := session.Must(session.NewSession())
+	sess, err := session.NewSessionWithOptions(session.Options{
+		SharedConfigState: session.SharedConfigEnable,
+	})
+	if err != nil { // resp is now filled
+		printAndExit(err)
+	}
 
 	// Create a new instance of the service's client with a Session.
 	// Optional aws.Config values can also be provided as variadic arguments
@@ -22,13 +28,12 @@ func RetrieveSecret(variableName string) {
 
 	svc := secretsmanager.New(sess)
 
-	// Uploads the object to S3. The Context will interrupt the request if the
-	// timeout expires.
+	// Get secret value
 	req, resp := svc.GetSecretValueRequest(&secretsmanager.GetSecretValueInput{
-		SecretId: &variableName,
+		SecretId: aws.String(variableName),
 	})
 
-	err := req.Send()
+	err = req.Send()
 	if err != nil { // resp is now filled
 		printAndExit(err)
 	}
