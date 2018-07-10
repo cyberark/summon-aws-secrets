@@ -3,9 +3,12 @@ package main
 import (
 	"os"
 
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/credentials/ec2rolecreds"
+	"github.com/aws/aws-sdk-go/aws/ec2metadata"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/secretsmanager"
-	"github.com/aws/aws-sdk-go/aws"
 )
 
 func RetrieveSecret(variableName string) {
@@ -14,19 +17,27 @@ func RetrieveSecret(variableName string) {
 	// Session should be shared where possible to take advantage of
 	// configuration and credential caching. See the session package for
 	// more information.
+
 	sess, err := session.NewSessionWithOptions(session.Options{
 		SharedConfigState: session.SharedConfigEnable,
 	})
-	if err != nil { // resp is now filled
+	if err != nil {
 		printAndExit(err)
 	}
 
-	// Create a new instance of the service's client with a Session.
-	// Optional aws.Config values can also be provided as variadic arguments
-	// to the New function. This option allows you to provide service
-	// specific configuration.
+	creds := credentials.NewChainCredentials(
+	[]credentials.Provider{
+		&ec2rolecreds.EC2RoleProvider{
+			Client: ec2metadata.New(sess),
+		},
+		&credentials.EnvProvider{},
+	})
 
-	svc := secretsmanager.New(sess)
+	// Create a new instance of the service's client with a Session.
+
+	svc := secretsmanager.New(session.Must(session.NewSession(&aws.Config{
+		Credentials: creds,
+	})))
 
 	// Get secret value
 	req, resp := svc.GetSecretValueRequest(&secretsmanager.GetSecretValueInput{
@@ -56,7 +67,7 @@ func main() {
 
 	singleArgument := os.Args[1]
 	switch singleArgument {
-	case "-v","--version":
+	case "-v", "--version":
 		os.Stdout.Write([]byte(VERSION))
 	default:
 		RetrieveSecret(singleArgument)

@@ -4,16 +4,16 @@
 PLATFORMS=(
   'darwin:amd64'     # MacOS
   # 'dragonfly:amd64'  # Dragonfly https://www.dragonflybsd.org/
-  'freebsd:amd64'
+#  'freebsd:amd64'
   # 'linux:386'
   'linux:amd64'
   # 'linux:arm'
   # 'linux:arm64'
-  'netbsd:amd64'
-  'openbsd:amd64'
-  'solaris:amd64'
+#  'netbsd:amd64'
+#  'openbsd:amd64'
+#  'solaris:amd64'
   # 'windows:386'
-  'windows:amd64'
+#  'windows:amd64'
 )
 
 echo "Creating summon-aws-secrets binaries in output/"
