@@ -3,21 +3,34 @@ package main
 import (
 	"os"
 
+	"github.com/aws/aws-sdk-go/aws/ec2metadata"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/secretsmanager"
 	"github.com/aws/aws-sdk-go/aws"
 )
 
 func RetrieveSecret(variableName string) {
+
+	// AWS Go SDK does not currently support automatic fetching of region from ec2metadata
+	// Create metaSession to fetch the region and supply it to the regular Session
+
+	metaSession, _ := session.NewSession()
+	metaClient := ec2metadata.New(metaSession)
+	region, _ := metaClient.Region()
+
+	conf := aws.NewConfig().WithRegion(region)
+
 	// All clients require a Session. The Session provides the client with
 	// shared configuration such as region, endpoint, and credentials. A
 	// Session should be shared where possible to take advantage of
 	// configuration and credential caching. See the session package for
 	// more information.
+
 	sess, err := session.NewSessionWithOptions(session.Options{
 		SharedConfigState: session.SharedConfigEnable,
+		Config: *conf,
 	})
-	if err != nil { // resp is now filled
+	if err != nil {
 		printAndExit(err)
 	}
 
