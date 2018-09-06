@@ -12,6 +12,20 @@ curl -sSL https://raw.githubusercontent.com/cyberark/summon-aws-secrets/master/i
 
 Otherwise, download the [latest release](https://github.com/cyberark/summon-aws-secrets/releases) and extract it to the directory `/usr/local/lib/summon`.
 
+## Variable names
+
+Variable names are used as identifiers for fetching Secrets. These are made up of a secret name (required) and secret key path (optional). 
+
+The format used is `my/secret/name#mysecretkeypath`, where `#mysecretkeypath` is optional and only relevant when the value returned by `my/secret/name` alone is valid JSON.
+
+### secret name (required)
+
+This is the AWS secret name, which must be ASCII letters, digits, or any of the following characters: /_+=.@-
+
+### secret key path (optional)
+
+The secret key path to access arbitrarily nested values inside secrets stored as valid JSON. summon-aws-secrets uses [GJSON](https://github.com/tidwall/gjson), please consult the [GJSON documentation](https://github.com/tidwall/gjson#path-syntax) for details on the path syntax. 
+
 ## Usage in isolation
 
 Give summon-aws-secrets a variable name and it will fetch it for you and print the value to stdout.

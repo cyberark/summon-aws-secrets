@@ -7,9 +7,20 @@ import (
 	"github.com/aws/aws-sdk-go/aws/ec2metadata"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/secretsmanager"
+	"strings"
+	"github.com/tidwall/gjson"
+	"fmt"
 )
 
-func RetrieveSecret(variableName string) {
+func RetrieveSecret(variableID string) {
+	tokens := strings.SplitN(variableID, "#", 2)
+
+	if len(tokens) != 2 {
+		tokens = append(tokens, "")
+	}
+
+	secretName, keyPath := tokens[0], tokens[1]
+
 	// All clients require a Session. The Session provides the client with
 	// shared configuration such as region, endpoint, and credentials. A
 	// Session should be shared where possible to take advantage of
@@ -52,7 +63,7 @@ func RetrieveSecret(variableName string) {
 
 	// Get secret value
 	req, resp := svc.GetSecretValueRequest(&secretsmanager.GetSecretValueInput{
-		SecretId: aws.String(variableName),
+		SecretId: aws.String(secretName),
 	})
 
 	err = req.Send()
@@ -65,6 +76,19 @@ func RetrieveSecret(variableName string) {
 		secretBytes = []byte(*resp.SecretString)
 	} else {
 		secretBytes = resp.SecretBinary
+	}
+
+	if keyPath != "" {
+		if !gjson.ValidBytes(secretBytes) {
+			printAndExit(fmt.Errorf("secretName=%s is not valid JSON, unable to retrieve %s", secretName, keyPath))
+		}
+
+		res := gjson.GetBytes(secretBytes, keyPath)
+		if res.Exists(){
+			secretBytes = []byte(res.String())
+		} else {
+			printAndExit(fmt.Errorf("keyPath=%s missing in secretName=%s", keyPath, secretName))
+		}
 	}
 
 	os.Stdout.Write(secretBytes)
