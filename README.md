@@ -12,9 +12,9 @@ curl -sSL https://raw.githubusercontent.com/cyberark/summon-aws-secrets/master/i
 
 Otherwise, download the [latest release](https://github.com/cyberark/summon-aws-secrets/releases) and extract it to the directory `/usr/local/lib/summon`.
 
-## Variable names
+## Variable IDs
 
-Variable names are used as identifiers for fetching Secrets. These are made up of a secret name (required) and secret key path (optional). 
+Variable IDs are used as identifiers for fetching Secrets. These are made up of a secret name (required) and secret key path (optional). 
 
 The format used is `my/secret/name#mysecretkeypath`, where `#mysecretkeypath` is optional and only relevant when the value returned by `my/secret/name` alone is valid JSON.
 
@@ -28,7 +28,7 @@ The secret key path to access arbitrarily nested values inside secrets stored as
 
 ## Usage in isolation
 
-Give summon-aws-secrets a variable name and it will fetch it for you and print the value to stdout.
+Give summon-aws-secrets a variable ID and it will fetch it for you and print the value to stdout.
 
 ```sh-session
 $ # Configure in similar fashion to AWS CLI see https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
