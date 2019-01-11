@@ -1,34 +1,34 @@
 #!/bin/bash
 
-# Platforms to build: https://golang.org/doc/install/source#environment
-PLATFORMS=(
-  'darwin:amd64'     # MacOS
-  # 'dragonfly:amd64'  # Dragonfly https://www.dragonflybsd.org/
-  'freebsd:amd64'
-  # 'linux:386'
-  'linux:amd64'
-  # 'linux:arm'
-  # 'linux:arm64'
-  'netbsd:amd64'
-  'openbsd:amd64'
-  'solaris:amd64'
-  # 'windows:386'
-  'windows:amd64'
+APP='summon-aws-secrets'
+PKGDIR='output'
+OSES=(
+  'darwin'
+  'freebsd'
+  'linux'
+  'netbsd'
+  'openbsd'
+  'solaris'
+  'windows'
 )
+GOARCH='amd64'
 
-echo "Creating summon-aws-secrets binaries in output/"
-docker-compose build --pull builder
-
-for platform in "${PLATFORMS[@]}"; do
-  GOOS=${platform%%:*}
-  GOARCH=${platform#*:}
-
+for GOOS in "${OSES[@]}"; do
+  echo "Building $GOOS-$GOARCH binary"
   echo "-----"
-  echo "GOOS=$GOOS, GOARCH=$GOARCH"
-  echo "....."
 
-  docker-compose run --rm \
-    -e GOOS=$GOOS -e GOARCH=$GOARCH \
-    builder \
-      build -v -o output/summon-aws-secrets-$GOOS-$GOARCH
+  docker run --rm \
+    -v "$PWD:/go/src/$APP" -w "/go/src/$APP" \
+    -e "GOOS=$GOOS" -e "GOARCH=$GOARCH" \
+    golang:1.9 \
+    go build -v -o $PKGDIR/$APP-$GOOS-$GOARCH
 done
+
+echo "Building linux-alpine binary"
+echo "-----"
+
+docker run --rm \
+  -v "$PWD:/go/src/$APP" -w "/go/src/$APP" \
+  -e "GOOS=linux" -e "GOARCH=$GOARCH" \
+  golang:1.9-alpine \
+  go build -v -o $PKGDIR/$APP-linux-alpine-amd64
