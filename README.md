@@ -22,6 +22,25 @@ $ summon-aws-secrets prod/aws/iam/user/robot/access_key_id
 8h9psadf89sdahfp98
 ```
 
+AWS Secrets Manager also supports multiple key value pairs stored as json blob. If you use this approach, it is possible to select the value of any of the key/value pairs by specifying a column followed by the key name:
+
+Example Secret JSON:
+```json
+{
+  "user-1": "password-1",
+  "user-2": "password-2",
+  "user-3": "password-3"
+}
+```
+
+```bash
+$ summon-aws-secrets prod/aws/iam/user/robot/access_key_id:user-2
+{ "user-1": "password-1", "user-2": "password-2", "user-3": "password-3"}
+
+$ summon-aws-secrets prod/aws/iam/user/robot/access_key_id:user-2
+password-2
+```
+
 ### Flags
 
 `summon-aws-secrets` supports a single flag.
