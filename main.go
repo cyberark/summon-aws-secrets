@@ -53,7 +53,7 @@ func RetrieveSecret(variableName string) {
 	svc := secretsmanager.New(sess)
 
 	// Check if key has been specified
-	arguments := strings.Split(variableName, ":")
+	arguments := strings.Split(variableName, "#")
 
 	secretName := arguments[0]
 	var keyName string
