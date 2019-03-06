@@ -6,7 +6,7 @@ services:
     entrypoint: /usr/local/go/bin/go
     command: build -v
     volumes:
-      - ./output:/go/src/github.com/cyberark/summon-aws-secrets/output
+      - ./output:/summon-aws-secrets/output
     environment:
       GOOS:
       GOARCH:
@@ -16,8 +16,6 @@ services:
     image: summon-aws-secrets-tester
     ports:
       - "8080"
-    entrypoint: /bin/bash
     command: './test-entrypoint.sh'
     volumes:
-      - .:/go/src/github.com/cyberark/summon-aws-secrets
-
+      - .:/summon-aws-secrets

@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"os"
+	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/ec2metadata"
@@ -50,9 +52,19 @@ func RetrieveSecret(variableName string) {
 
 	svc := secretsmanager.New(sess)
 
+	// Check if key has been specified
+	arguments := strings.Split(variableName, "#")
+
+	secretName := arguments[0]
+	var keyName string
+
+	if len(arguments) > 1 {
+		keyName = arguments[1]
+	}
+
 	// Get secret value
 	req, resp := svc.GetSecretValueRequest(&secretsmanager.GetSecretValueInput{
-		SecretId: aws.String(variableName),
+		SecretId: aws.String(secretName),
 	})
 
 	err = req.Send()
@@ -67,25 +79,44 @@ func RetrieveSecret(variableName string) {
 		secretBytes = resp.SecretBinary
 	}
 
+	if keyName != "" {
+		secretBytes, err = getValueByKey(keyName, secretBytes)
+		if err != nil {
+			printAndExit(err)
+		}
+	}
+
 	os.Stdout.Write(secretBytes)
 }
 
 func main() {
 	if len(os.Args) != 2 {
-		os.Stderr.Write([]byte("A variable name or version flag must be given as the first and only argument!"))
+		os.Stderr.Write([]byte("A variable ID or version flag must be given as the first and only argument!\n"))
 		os.Exit(-1)
 	}
 
-	singleArgument := os.Args[1]
-	switch singleArgument {
-	case "-v","--version":
+	// Get the secret and key name from the argument
+	singleArgmument := os.Args[1]
+
+	switch singleArgmument {
+	case "-v", "--version":
 		os.Stdout.Write([]byte(VERSION))
 	default:
-		RetrieveSecret(singleArgument)
+		RetrieveSecret(singleArgmument)
 	}
 }
 
 func printAndExit(err error) {
 	os.Stderr.Write([]byte(err.Error()))
 	os.Exit(1)
+}
+
+func getValueByKey(keyName string, secretBytes []byte) (secret []byte, err error) {
+	var secrets map[string]string
+
+	if err := json.Unmarshal(secretBytes, &secrets); err != nil {
+		return nil, err
+	}
+
+	return []byte(secrets[keyName]), nil
 }
