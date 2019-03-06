@@ -1,11 +1,11 @@
 package main
 
 import (
+	"bytes"
 	. "github.com/smartystreets/goconvey/convey"
 	"os"
-	"testing"
 	"os/exec"
-	"bytes"
+	"testing"
 )
 
 func RunCommand(name string, arg ...string) (bytes.Buffer, bytes.Buffer, error) {
@@ -18,13 +18,13 @@ func RunCommand(name string, arg ...string) (bytes.Buffer, bytes.Buffer, error) 
 	return stdout, stderr, err
 }
 
-func WithoutArgs()  {
+func WithoutArgs() {
 	Convey("Given summon-aws-secrets is run with no arguments", func() {
 		_, stderr, err := RunCommand(PackageName)
 
 		Convey("Returns with error", func() {
 			So(err, ShouldNotBeNil)
-			So(stderr.String(), ShouldEqual, "A variable ID or version flag must be given as the first and only argument!")
+			So(stderr.String(), ShouldStartWith, "A variable ID or version flag must be given as the first and only argument!")
 		})
 	})
 }

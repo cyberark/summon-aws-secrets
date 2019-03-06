@@ -91,7 +91,7 @@ func RetrieveSecret(variableName string) {
 
 func main() {
 	if len(os.Args) != 2 {
-		os.Stderr.Write([]byte("A variable ID or version flag must be given as the first and only argument!"))
+		os.Stderr.Write([]byte("A variable ID or version flag must be given as the first and only argument!\n"))
 		os.Exit(-1)
 	}
 

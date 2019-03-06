@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Platforms to build: https://golang.org/doc/install/source#environment
 PLATFORMS=(
@@ -28,7 +28,8 @@ for platform in "${PLATFORMS[@]}"; do
   echo "....."
 
   docker-compose run --rm \
-    -e GOOS=$GOOS -e GOARCH=$GOARCH \
+                     -e GOOS=$GOOS \
+                     -e GOARCH=$GOARCH \
     builder \
-      build -v -o output/summon-aws-secrets-$GOOS-$GOARCH
+      build -o output/summon-aws-secrets-$GOOS-$GOARCH
 done
