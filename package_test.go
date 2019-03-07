@@ -2,10 +2,11 @@ package main
 
 import (
 	"bytes"
-	. "github.com/smartystreets/goconvey/convey"
 	"os"
 	"os/exec"
 	"testing"
+
+	. "github.com/smartystreets/goconvey/convey"
 )
 
 func RunCommand(name string, arg ...string) (bytes.Buffer, bytes.Buffer, error) {
@@ -29,6 +30,24 @@ func WithoutArgs() {
 	})
 }
 
+func WithKeyPairValues() {
+	Convey("Given summon-aws-secrets is retrieving a secret with key value format", func() {
+		secret := "{\"username\":\"USERNAME\",\"password\":\"PASSWORD\",\"port\":8000}"
+
+		Convey("Returns with the value of the key", func() {
+			stdout, err := getValueByKey("username", []byte(secret))
+			So(err, ShouldBeNil)
+			So(string(stdout), ShouldStartWith, "USERNAME")
+		})
+
+		Convey("Always returns as a string", func() {
+			stdout, err := getValueByKey("port", []byte(secret))
+			So(err, ShouldBeNil)
+			So(string(stdout), ShouldStartWith, "8000")
+		})
+	})
+}
+
 const PackageName = "summon-aws-secrets"
 
 func TestPackage(t *testing.T) {
@@ -42,6 +61,7 @@ func TestPackage(t *testing.T) {
 			os.Setenv("PATH", Path)
 
 			WithoutArgs()
+			WithKeyPairValues()
 		})
 	})
 }
