@@ -19,35 +19,6 @@ func RunCommand(name string, arg ...string) (bytes.Buffer, bytes.Buffer, error) 
 	return stdout, stderr, err
 }
 
-func WithoutArgs() {
-	Convey("Given summon-aws-secrets is run with no arguments", func() {
-		_, stderr, err := RunCommand(PackageName)
-
-		Convey("Returns with error", func() {
-			So(err, ShouldNotBeNil)
-			So(stderr.String(), ShouldStartWith, "A variable ID or version flag must be given as the first and only argument!")
-		})
-	})
-}
-
-func WithKeyPairValues() {
-	Convey("Given summon-aws-secrets is retrieving a secret with key value format", func() {
-		secret := "{\"username\":\"USERNAME\",\"password\":\"PASSWORD\",\"port\":8000}"
-
-		Convey("Returns with the value of the key", func() {
-			stdout, err := getValueByKey("username", []byte(secret))
-			So(err, ShouldBeNil)
-			So(string(stdout), ShouldStartWith, "USERNAME")
-		})
-
-		Convey("Always returns as a string", func() {
-			stdout, err := getValueByKey("port", []byte(secret))
-			So(err, ShouldBeNil)
-			So(string(stdout), ShouldStartWith, "8000")
-		})
-	})
-}
-
 const PackageName = "summon-aws-secrets"
 
 func TestPackage(t *testing.T) {
@@ -60,8 +31,30 @@ func TestPackage(t *testing.T) {
 			defer e.RestoreEnv()
 			os.Setenv("PATH", Path)
 
-			WithoutArgs()
-			WithKeyPairValues()
+			Convey("Given summon-aws-secrets is run with no arguments", func() {
+				_, stderr, err := RunCommand(PackageName)
+
+				Convey("Returns with error", func() {
+					So(err, ShouldNotBeNil)
+					So(stderr.String(), ShouldStartWith, "A variable ID or version flag must be given as the first and only argument!")
+				})
+			})
+
+			Convey("Given summon-aws-secrets is retrieving a secret with key value format", func() {
+				secret := `{ "username": "USERNAME", "password": "PASSWORD", "port": 8000 }`
+
+				Convey("Returns with the value of the key", func() {
+					stdout, err := getValueByKey("username", []byte(secret))
+					So(err, ShouldBeNil)
+					So(string(stdout), ShouldEqual, "USERNAME")
+				})
+
+				Convey("Always returns as a string", func() {
+					stdout, err := getValueByKey("port", []byte(secret))
+					So(err, ShouldBeNil)
+					So(string(stdout), ShouldEqual, "8000")
+				})
+			})
 		})
 	})
 }
