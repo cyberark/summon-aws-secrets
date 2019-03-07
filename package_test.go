@@ -39,22 +39,24 @@ func TestPackage(t *testing.T) {
 					So(stderr.String(), ShouldStartWith, "A variable ID or version flag must be given as the first and only argument!")
 				})
 			})
+		})
+	})
+}
 
-			Convey("Given summon-aws-secrets is retrieving a secret with key value format", func() {
-				secret := `{ "username": "USERNAME", "password": "PASSWORD", "port": 8000 }`
+func Test_getValueByKey(t *testing.T) {
+	Convey("Given a valid JSON format stored secret", t, func() {
+		secret := `{ "username": "USERNAME", "password": "PASSWORD", "port": 8000 }`
 
-				Convey("Returns with the value of the key", func() {
-					stdout, err := getValueByKey("username", []byte(secret))
-					So(err, ShouldBeNil)
-					So(string(stdout), ShouldEqual, "USERNAME")
-				})
+		Convey("Returns the value of the key", func() {
+			stdout, err := getValueByKey("username", []byte(secret))
+			So(err, ShouldBeNil)
+			So(string(stdout), ShouldEqual, "USERNAME")
+		})
 
-				Convey("Always returns as a string", func() {
-					stdout, err := getValueByKey("port", []byte(secret))
-					So(err, ShouldBeNil)
-					So(string(stdout), ShouldEqual, "8000")
-				})
-			})
+		Convey("Always returns as a string", func() {
+			stdout, err := getValueByKey("port", []byte(secret))
+			So(err, ShouldBeNil)
+			So(string(stdout), ShouldEqual, "8000")
 		})
 	})
 }
