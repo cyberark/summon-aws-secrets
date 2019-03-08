@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 	"strings"
+	"fmt"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/ec2metadata"
@@ -112,11 +113,14 @@ func printAndExit(err error) {
 }
 
 func getValueByKey(keyName string, secretBytes []byte) (secret []byte, err error) {
-	var secrets map[string]string
+	var secrets map[string]interface{}
+	var secretValue string
 
 	if err := json.Unmarshal(secretBytes, &secrets); err != nil {
 		return nil, err
 	}
 
-	return []byte(secrets[keyName]), nil
+	secretValue = fmt.Sprint(secrets[keyName])
+
+	return []byte(secretValue), nil
 }

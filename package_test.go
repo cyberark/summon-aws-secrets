@@ -2,10 +2,11 @@ package main
 
 import (
 	"bytes"
-	. "github.com/smartystreets/goconvey/convey"
 	"os"
 	"os/exec"
 	"testing"
+
+	. "github.com/smartystreets/goconvey/convey"
 )
 
 func RunCommand(name string, arg ...string) (bytes.Buffer, bytes.Buffer, error) {
@@ -16,17 +17,6 @@ func RunCommand(name string, arg ...string) (bytes.Buffer, bytes.Buffer, error) 
 	cmd.Stderr = &stderr
 	err := cmd.Run()
 	return stdout, stderr, err
-}
-
-func WithoutArgs() {
-	Convey("Given summon-aws-secrets is run with no arguments", func() {
-		_, stderr, err := RunCommand(PackageName)
-
-		Convey("Returns with error", func() {
-			So(err, ShouldNotBeNil)
-			So(stderr.String(), ShouldStartWith, "A variable ID or version flag must be given as the first and only argument!")
-		})
-	})
 }
 
 const PackageName = "summon-aws-secrets"
@@ -41,7 +31,32 @@ func TestPackage(t *testing.T) {
 			defer e.RestoreEnv()
 			os.Setenv("PATH", Path)
 
-			WithoutArgs()
+			Convey("Given summon-aws-secrets is run with no arguments", func() {
+				_, stderr, err := RunCommand(PackageName)
+
+				Convey("Returns with error", func() {
+					So(err, ShouldNotBeNil)
+					So(stderr.String(), ShouldStartWith, "A variable ID or version flag must be given as the first and only argument!")
+				})
+			})
+		})
+	})
+}
+
+func Test_getValueByKey(t *testing.T) {
+	Convey("Given a valid JSON format stored secret", t, func() {
+		secret := `{ "username": "USERNAME", "password": "PASSWORD", "port": 8000 }`
+
+		Convey("Returns the value of the key", func() {
+			stdout, err := getValueByKey("username", []byte(secret))
+			So(err, ShouldBeNil)
+			So(string(stdout), ShouldEqual, "USERNAME")
+		})
+
+		Convey("Always returns as a string", func() {
+			stdout, err := getValueByKey("port", []byte(secret))
+			So(err, ShouldBeNil)
+			So(string(stdout), ShouldEqual, "8000")
 		})
 	})
 }
