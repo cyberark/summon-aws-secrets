@@ -20,7 +20,7 @@ The format used is `my/secret/name#mysecretkeypath`, where `#mysecretkeypath` is
 This is the AWS secret name, which must be ASCII letters, digits, or any of the following characters: /_+=.@-
 
 ### secret key path (optional)
-The secret key path to access arbitrarily nested values inside secrets stored as valid JSON.
+The secret key path provides access to top-level values inside secrets stored as valid JSON.
 
 ### Example
 Example Secret JSON in aws:
