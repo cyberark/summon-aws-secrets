@@ -39,24 +39,25 @@ func TestPackage(t *testing.T) {
 					So(stderr.String(), ShouldStartWith, "A variable ID or version flag must be given as the first and only argument!")
 				})
 			})
-		})
-	})
-}
 
-func Test_getValueByKey(t *testing.T) {
-	Convey("Given a valid JSON format stored secret", t, func() {
-		secret := `{ "username": "USERNAME", "password": "PASSWORD", "port": 8000 }`
-
-		Convey("Returns the value of the key", func() {
-			stdout, err := getValueByKey("username", []byte(secret))
-			So(err, ShouldBeNil)
-			So(string(stdout), ShouldEqual, "USERNAME")
 		})
 
-		Convey("Always returns as a string", func() {
-			stdout, err := getValueByKey("port", []byte(secret))
-			So(err, ShouldBeNil)
-			So(string(stdout), ShouldEqual, "8000")
+		Convey("Given summon-aws-secrets is run with secret name", func() {
+			stdout, _, err := RunCommand(PackageName, "production/secret")
+
+			Convey("Returns secret value as string on stdout", func() {
+				So(err, ShouldBeNil)
+				So(AreEqualJSON(stdout.String(), `{"a": 1,"b": "xyz"}`), ShouldBeTrue)
+			})
+		})
+
+		Convey("Given summon-aws-secrets is run with secret name and key path", func() {
+			stdout, _, err := RunCommand(PackageName, "production/secret#a")
+
+			Convey("Returns secret value as string on stdout", func() {
+				So(err, ShouldBeNil)
+				So(stdout.String(), ShouldEqual, "1")
+			})
 		})
 	})
 }

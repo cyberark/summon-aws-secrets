@@ -12,7 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/secretsmanager"
 )
 
-func RetrieveSecret(variableName string) {
+func RetrieveSecret(variableName string) ([]byte, error) {
 	// All clients require a Session. The Session provides the client with
 	// shared configuration such as region, endpoint, and credentials. A
 	// Session should be shared where possible to take advantage of
@@ -21,8 +21,10 @@ func RetrieveSecret(variableName string) {
 	sess, err := session.NewSessionWithOptions(session.Options{
 		SharedConfigState: session.SharedConfigEnable,
 	})
+	sess.Config.Endpoint = aws.String(os.Getenv("AWS_TEST_ENDPOINT"))
+
 	if err != nil {
-		printAndExit(err)
+		return nil, err
 	}
 
 	// AWS Go SDK does not currently support automatic fetching of region from ec2metadata.
@@ -31,7 +33,7 @@ func RetrieveSecret(variableName string) {
 	if *sess.Config.Region == "" {
 		metaSession, err := session.NewSession()
 		if err != nil {
-			printAndExit(err)
+			return nil, err
 		}
 
 		metaClient := ec2metadata.New(metaSession)
@@ -41,7 +43,7 @@ func RetrieveSecret(variableName string) {
 			if region, err := metaClient.Region(); err == nil {
 				sess.Config.Region = aws.String(region)
 			} else {
-				printAndExit(err)
+				return nil, err
 			}
 		}
 	}
@@ -70,7 +72,7 @@ func RetrieveSecret(variableName string) {
 
 	err = req.Send()
 	if err != nil { // resp is now filled
-		printAndExit(err)
+		return nil, err
 	}
 
 	var secretBytes []byte
@@ -83,11 +85,11 @@ func RetrieveSecret(variableName string) {
 	if keyName != "" {
 		secretBytes, err = getValueByKey(keyName, secretBytes)
 		if err != nil {
-			printAndExit(err)
+			return nil, err
 		}
 	}
 
-	os.Stdout.Write(secretBytes)
+	return secretBytes, nil
 }
 
 func main() {
@@ -103,13 +105,13 @@ func main() {
 	case "-v", "--version":
 		os.Stdout.Write([]byte(VERSION))
 	default:
-		RetrieveSecret(singleArgmument)
+		secretBytes, err := RetrieveSecret(singleArgmument)
+		if err != nil {
+			os.Stderr.Write([]byte(err.Error()))
+			os.Exit(1)
+		}
+		os.Stdout.Write(secretBytes)
 	}
-}
-
-func printAndExit(err error) {
-	os.Stderr.Write([]byte(err.Error()))
-	os.Exit(1)
 }
 
 func getValueByKey(keyName string, secretBytes []byte) (secret []byte, err error) {

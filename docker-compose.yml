@@ -19,3 +19,14 @@ services:
     command: './test-entrypoint.sh'
     volumes:
       - .:/summon-aws-secrets
+
+  localstack:
+    image: localstack/localstack
+    environment:
+      - SERVICES=secretsmanager
+      - HOSTNAME=localstack
+      - DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_TEST_ENDPOINT
+      - AWS_DEFAULT_REGION
