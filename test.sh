@@ -22,13 +22,13 @@ function main() {
 
   docker-compose up -d localstack
   echo "waiting for localstack to be ready"
-  until $(docker-compose exec localstack wget -qO /dev/null "http://localhost:8080/"); do
+  until $(docker-compose exec -T localstack wget -qO /dev/null "http://localhost:8080/"); do
     sleep 2;
     printf ".";
   done
   echo "done"
 
-  docker-compose exec \
+  docker-compose exec -T \
    localstack \
    bash -c "
 printenv AWS_DEFAULT_REGION
