@@ -8,6 +8,10 @@ pipeline {
     buildDiscarder(logRotator(daysToKeepStr: '30'))
   }
 
+  triggers {
+    cron(getDailyCronString())
+  }
+
   stages {
     stage('Build Go binaries') {
       steps {
