@@ -13,6 +13,14 @@ pipeline {
   }
 
   stages {
+
+    stage('Validate') {
+      parallel {
+        stage('Changelog') {
+          steps { sh './parse-changelog.sh' }
+        }
+      }
+    }
     stage('Build Go binaries') {
       steps {
         sh './build.sh'
