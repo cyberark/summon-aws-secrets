@@ -91,3 +91,11 @@ AWS_SECRET_ACCESS_KEY=A23MSKSKSJASHDIWM
 ## Configuration
 This provider uses the same configuration pattern as the [AWS CLI
 ](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) to connect to AWS.
+
+
+## Contributing
+
+We welcome contributions of all kinds to this repository. For instructions on how to get started and descriptions of our development workflows, please see our [contributing
+guide][contrib].
+
+[contrib]: CONTRIBUTING.md
