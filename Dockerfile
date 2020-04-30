@@ -1,4 +1,4 @@
-FROM golang:1.11
+FROM golang:1.13-stretch
 MAINTAINER Conjur Inc
 
 ENV GOOS=linux

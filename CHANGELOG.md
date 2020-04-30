@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Upgraded build/test images to use Golang 1.13 instead of 1.11 ([#27](https://github.com/cyberark/summon-aws-secrets/issues/27))
 
 ## [0.3.0] - 2019-03-06
 ### Added
