@@ -32,6 +32,9 @@ pipeline {
         sh './test.sh'
         junit 'output/junit.xml'
         sh 'sudo chown -R jenkins:jenkins .'  // bad docker mount creates unreadable files TODO fix this
+        cobertura autoUpdateHealth: true, autoUpdateStability: true, coberturaReportFile: 'output/coverage.xml', conditionalCoverageTargets: '30, 0, 0', failUnhealthy: true, failUnstable: false, lineCoverageTargets: '30, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '30, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
+        sh 'mv output/c.out .'
+        ccCoverage("gocov", "--prefix github.com/cyberark/summon-aws-secrets")
       }
     }
 
