@@ -1,7 +1,7 @@
 module github.com/cyberark/summon-aws-secrets
 
 require (
-	github.com/aws/aws-sdk-go v1.17.1
+	github.com/aws/aws-sdk-go v1.34.6
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/stretchr/testify v1.5.1 // indirect
 )
