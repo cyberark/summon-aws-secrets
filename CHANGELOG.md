@@ -5,12 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Changed
-- Upgraded build/test images to use Golang 1.13 instead of 1.11 ([#27](https://github.com/cyberark/summon-aws-secrets/issues/27))
 
 ## [0.4.0] - 2020-09-11
-### Added
-- Update aws-sdk-go to v1.34.20
+### Changed
+- Update aws-sdk-go to v1.34.6 to enable using new environment variables that AWS supports, such as
+  `AWS_ROLE_ARN` which is required for EKS.
+  [PR cyberark/summon-aws-secrets#37](https://github.com/cyberark/summon-aws-secrets/pull/37)
+- Upgraded build/test images to use Golang 1.13 instead of 1.11.
+  [cyberark/summon-aws-secrets#27](https://github.com/cyberark/summon-aws-secrets/issues/27)
 
 ## [0.3.0] - 2019-03-06
 ### Added
