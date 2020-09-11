@@ -11,6 +11,8 @@ curl -sSL https://raw.githubusercontent.com/cyberark/summon-aws-secrets/master/i
 
 Otherwise, download the [latest release](https://github.com/cyberark/summon-aws-secrets/releases) and extract it to the directory `/usr/local/lib/summon`.
 
+**If you are running an Alpine-based system, you will need to add libc6 compatiblity package (`apk add libc6-compat`)!**
+
 ## Variable IDs
 Variable IDs are used as identifiers for fetching Secrets. These are made up of a secret name (required) and secret key path (optional). 
 
