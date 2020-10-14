@@ -2,9 +2,9 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"strings"
-	"fmt"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/ec2metadata"
@@ -12,7 +12,31 @@ import (
 	"github.com/aws/aws-sdk-go/service/secretsmanager"
 )
 
+func ExtractSecretPathAndArguments(input string) (secretPath string, keyName string, secretVersion string) {
+	keyName = ""
+	secretVersion = ""
+	secretPath = ""
+
+	if strings.ContainsRune(input, 35) && strings.ContainsRune(input, 94) {
+		fields := strings.FieldsFunc(input, func(r rune) bool {
+			return r == '#' || r == '^'
+		})
+		return fields[0], fields[1], fields[2]
+
+	} else if strings.ContainsRune(input, 35) {
+		fields := strings.SplitN(input, "#", 2)
+		return fields[0], fields[1], ""
+	} else if strings.ContainsRune(input, 94) {
+		fields := strings.SplitN(input, "^", 2)
+		return fields[0], "", fields[1]
+	}
+
+	return input, "", ""
+}
+
 func RetrieveSecret(variableName string) {
+	// By default get secrets that contain the version AWSCURRENT
+	secretVersion := "AWSCURRENT"
 	// All clients require a Session. The Session provides the client with
 	// shared configuration such as region, endpoint, and credentials. A
 	// Session should be shared where possible to take advantage of
@@ -53,20 +77,20 @@ func RetrieveSecret(variableName string) {
 
 	svc := secretsmanager.New(sess)
 
-	// Check if key has been specified
-	arguments := strings.SplitN(variableName, "#", 2)
+	//Check if arguments (key, version) have been specified
+	secretName, keyName, secretVersion := ExtractSecretPathAndArguments(variableName)
 
-	secretName := arguments[0]
-	var keyName string
+	secretValueInput := &secretsmanager.GetSecretValueInput{
+		SecretId: aws.String(secretName),
+	}
 
-	if len(arguments) > 1 {
-		keyName = arguments[1]
+	// If a secret version has been specified
+	if len(secretVersion) > 0 {
+		secretValueInput.VersionStage = aws.String(secretVersion)
 	}
 
 	// Get secret value
-	req, resp := svc.GetSecretValueRequest(&secretsmanager.GetSecretValueInput{
-		SecretId: aws.String(secretName),
-	})
+	req, resp := svc.GetSecretValueRequest(secretValueInput)
 
 	err = req.Send()
 	if err != nil { // resp is now filled
@@ -79,8 +103,8 @@ func RetrieveSecret(variableName string) {
 	} else {
 		secretBytes = resp.SecretBinary
 	}
-
-	if keyName != "" {
+	// If key has been specified for retrieval
+	if len(keyName) > 0 {
 		secretBytes, err = getValueByKey(keyName, secretBytes)
 		if err != nil {
 			printAndExit(err)
