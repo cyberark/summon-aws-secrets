@@ -12,7 +12,7 @@ function main() {
   docker-compose build --pull tester
 
   docker-compose run --rm \
-    --entrypoint "bash -c './convey.sh& bash'" \
+    --entrypoint "bash -c './bin/convey.sh& bash'" \
     --service-ports \
     tester
 }

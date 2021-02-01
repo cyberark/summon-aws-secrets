@@ -16,6 +16,13 @@ services:
     image: summon-aws-secrets-tester
     ports:
       - "8080"
-    command: './test-entrypoint.sh'
+    command: './bin/test-entrypoint.sh'
     volumes:
       - .:/summon-aws-secrets
+
+  goreleaser:
+    image: registry.tld/goreleaser
+    volumes:
+      - .:/summon-aws-secrets
+    working_dir: /summon-aws-secrets
+
