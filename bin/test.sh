@@ -7,6 +7,8 @@ function finish {
 }
 trap finish EXIT
 
+mkdir -p output
+
 function main() {
   docker-compose build --pull tester
 

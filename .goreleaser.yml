@@ -1,0 +1,42 @@
+# all available options: https://goreleaser.com/customization/
+project_name: summon-aws-secrets
+
+before:
+  hooks: []
+
+builds:
+  - binary: summon-aws-secrets
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - 'darwin'       # MacOS
+      - 'freebsd'
+      - 'linux'
+      - 'netbsd'
+      - 'openbsd'
+      - 'solaris'
+      - 'windows'
+    goarch:
+      - amd64
+    ldflags: []
+
+archives:
+  - id: summon-aws-secrets
+    name_template: "{{.ProjectName}}-{{.Version}}-{{.Os}}-{{.Arch}}"
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - CHANGELOG.md
+      - README.md
+      - LICENSE
+      - SECURITY.md
+
+checksum:
+  name_template: 'SHA256SUMS.txt'
+
+release:
+  disable: true
+
+changelog:
+  skip: true

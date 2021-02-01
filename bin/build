@@ -1,0 +1,14 @@
+#!/bin/bash -e
+
+git fetch --tags  # jenkins does not do this automatically yet
+
+docker-compose pull goreleaser
+
+echo "> Building and packaging binaries"
+docker-compose run --rm \
+  goreleaser release --rm-dist --snapshot
+
+# Needed for testing stages
+goos='linux'
+goarch="amd64"
+cp dist/summon-aws-secrets_${goos}_${goarch}/summon-aws-secrets .

@@ -1,5 +1,6 @@
 # Generated files
 output/
+dist/
 pkg
 webapp1.json
 junit.xml
