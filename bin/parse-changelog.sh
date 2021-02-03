@@ -1,6 +1,7 @@
 #!/bin/bash -ex
 
-cd "$(dirname "$0")"
+# Run from top-level dir
+cd "$(dirname "$0")/.." || (echo "Could not cd to parent dir"; exit 1)
 
 docker run --rm \
   --volume "${PWD}/CHANGELOG.md:/CHANGELOG.md"  \

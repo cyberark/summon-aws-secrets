@@ -17,31 +17,26 @@ pipeline {
     stage('Validate') {
       parallel {
         stage('Changelog') {
-          steps { sh './parse-changelog.sh' }
+          steps { sh './bin/parse-changelog.sh' }
         }
       }
     }
+
     stage('Build Go binaries') {
       steps {
-        sh './build.sh'
-        archiveArtifacts artifacts: 'output/*', fingerprint: true
+        sh './bin/build'
+        archiveArtifacts artifacts: 'dist/*', fingerprint: true
       }
     }
+
     stage('Run unit tests') {
       steps {
-        sh './test.sh'
+        sh './bin/test.sh'
         junit 'output/junit.xml'
         sh 'sudo chown -R jenkins:jenkins .'  // bad docker mount creates unreadable files TODO fix this
         cobertura autoUpdateHealth: true, autoUpdateStability: true, coberturaReportFile: 'output/coverage.xml', conditionalCoverageTargets: '30, 0, 0', failUnhealthy: true, failUnstable: false, lineCoverageTargets: '30, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '30, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
         sh 'mv output/c.out .'
         ccCoverage("gocov", "--prefix github.com/cyberark/summon-aws-secrets")
-      }
-    }
-
-    stage('Package distribution tarballs') {
-      steps {
-        sh './package.sh'
-        archiveArtifacts artifacts: 'output/dist/*', fingerprint: true
       }
     }
   }

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash -e
 
 function finish {
   echo 'Removing environment'
@@ -7,13 +7,12 @@ function finish {
 }
 trap finish EXIT
 
-function main() {
+mkdir -p output
 
+function main() {
   docker-compose build --pull tester
 
   docker-compose run --rm \
-    --entrypoint "bash -c './convey.sh& bash'" \
-    --service-ports \
     tester
 }
 
