@@ -6,7 +6,7 @@ Use the auto-install script. This will install the latest version of summon-aws-
 The script requires sudo to place summon-aws-secrets in `/usr/local/lib/summon`.
 
 ```
-curl -sSL https://raw.githubusercontent.com/cyberark/summon-aws-secrets/master/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/cyberark/summon-aws-secrets/main/install.sh | bash
 ```
 
 Otherwise, download the [latest release](https://github.com/cyberark/summon-aws-secrets/releases) and extract it to the directory `/usr/local/lib/summon`.
