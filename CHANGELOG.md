@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Security
+- Updated golang.org/x/net to v0.0.0-20211209124913-491a49abca63
+  [cyberark/summon-aws-secrets#53](https://github.com/cyberark/summon-aws-secrets/pull/53)
 
 ## [0.4.0] - 2020-09-11
 ### Changed
