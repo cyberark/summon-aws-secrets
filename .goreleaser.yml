@@ -5,7 +5,8 @@ before:
   hooks: []
 
 builds:
-  - binary: summon-aws-secrets
+  - id: summon-aws-secrets
+    binary: summon-aws-secrets
     env:
       - CGO_ENABLED=0
     goos:
@@ -19,6 +20,16 @@ builds:
     goarch:
       - amd64
     ldflags: []
+  - id: summon-aws-secrets-arm
+    binary: summon-aws-secrets
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - 'darwin'       # MacOS
+    goarch:
+      - arm64
+    ldflags: []
+
 
 archives:
   - id: summon-aws-secrets
