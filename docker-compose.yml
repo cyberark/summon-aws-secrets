@@ -21,7 +21,7 @@ services:
       - .:/summon-aws-secrets
 
   goreleaser:
-    image: registry.tld/goreleaser
+    image: goreleaser/goreleaser:latest
     volumes:
       - .:/summon-aws-secrets
     working_dir: /summon-aws-secrets
