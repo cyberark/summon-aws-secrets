@@ -21,7 +21,10 @@ services:
       - .:/summon-aws-secrets
 
   goreleaser:
-    image: goreleaser/goreleaser:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.releaser
+    image: summon-aws-secrets-releaser
     volumes:
       - .:/summon-aws-secrets
     working_dir: /summon-aws-secrets

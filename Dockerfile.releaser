@@ -1,5 +1,4 @@
-FROM golang:1.16-stretch
-MAINTAINER Conjur Inc
+FROM goreleaser/goreleaser:latest
 
 # On CyberArk dev laptops, golang module dependencies are downloaded with a
 # corporate proxy in the middle. For these connections to succeed we need to
@@ -12,22 +11,5 @@ MAINTAINER Conjur Inc
 ADD build_ca_certificate /usr/local/share/ca-certificates/
 RUN update-ca-certificates
 
-ENV GOOS=linux
-ENV GOARCH=amd64
-
-EXPOSE 8080
-
-RUN apt-get update && \
-    apt-get install -y jq
-
-WORKDIR /summon-aws-secrets
-
-RUN go get -u github.com/jstemmer/go-junit-report && \
-    go get -u github.com/axw/gocov/gocov && \
-    go get -u github.com/AlekSi/gocov-xml && \
-    mkdir -p /summon-aws-secrets/output
-
-COPY go.mod go.sum /summon-aws-secrets/
-RUN go mod download
-
-COPY . .
+# Workaround for CVE-2022-24765 when running git inside a docker container
+RUN git config --global --add safe.directory /summon-aws-secrets
