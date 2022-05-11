@@ -6,8 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.4.1] - 2021-05-10
 ### Added
-- Added a build for Apple Silicon [cyberark/summon-aws-secrets#55](https://github.com/cyberark/summon-aws-secrets/issues/55)
+- Added a build for Apple Silicon
+  [cyberark/summon-aws-secrets#55](https://github.com/cyberark/summon-aws-secrets/issues/55)
+
+### Changed
+- The project Golang version is updated from the end-of-life v1.13 to v1.17.
+  [cyberark/summon-aws-secrets#54](https://github.com/cyberark/summon-aws-secrets/pull/54)
 
 ## [0.4.0] - 2020-09-11
 ### Changed
@@ -34,7 +40,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/cyberark/summon-aws-secrets/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/cyberark/summon-aws-secrets/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/cyberark/summon-aws-secrets/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/cyberark/summon-aws-secrets/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/cyberark/summon-aws-secrets/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/cyberark/summon-aws-secrets/compare/v0.1.0...v0.2.0
