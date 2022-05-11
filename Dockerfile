@@ -1,4 +1,4 @@
-FROM golang:1.16-stretch
+FROM golang:1.17-stretch
 MAINTAINER Conjur Inc
 
 # On CyberArk dev laptops, golang module dependencies are downloaded with a
@@ -22,9 +22,9 @@ RUN apt-get update && \
 
 WORKDIR /summon-aws-secrets
 
-RUN go get -u github.com/jstemmer/go-junit-report && \
-    go get -u github.com/axw/gocov/gocov && \
-    go get -u github.com/AlekSi/gocov-xml && \
+RUN go install github.com/jstemmer/go-junit-report@latest && \
+    go install github.com/axw/gocov/gocov@latest && \
+    go install github.com/AlekSi/gocov-xml@latest && \
     mkdir -p /summon-aws-secrets/output
 
 COPY go.mod go.sum /summon-aws-secrets/
