@@ -11,3 +11,6 @@ secrets.yml
 *.sublime-project
 .idea
 *.sw[po]
+
+# Temporary directory to store the CyberArk proxy CA certificate
+build_ca_certificate/
