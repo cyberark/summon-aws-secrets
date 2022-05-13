@@ -23,9 +23,27 @@ pipeline {
     }
 
     stage('Build Go binaries') {
-      steps {
-        sh './bin/build'
-        archiveArtifacts artifacts: 'dist/*', fingerprint: true
+      stages {
+        stage('Release artifacts') {
+          when {
+            buildingTag()
+          }
+          steps {
+            sh './bin/build'
+            archiveArtifacts artifacts: 'dist/*', fingerprint: true
+          }
+        }
+        stage('Snapshot artifacts') {
+          when {
+            not {
+              buildingTag()
+            }
+          }
+          steps {
+            sh './bin/build --snapshot'
+            archiveArtifacts artifacts: 'dist/*', fingerprint: true
+          }
+        }
       }
     }
 

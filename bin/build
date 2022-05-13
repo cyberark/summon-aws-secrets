@@ -2,7 +2,7 @@
 
 function main() {
   retrieve_cyberark_ca_cert
-  build_binaries
+  build_binaries "$@"
 
   # Needed for testing stages
   goos='linux'
@@ -45,8 +45,7 @@ function build_binaries() {
 
   echo "> Building and packaging binaries"
   docker-compose run --rm \
-    goreleaser release --rm-dist --snapshot
+    goreleaser release --rm-dist --skip-publish --skip-announce --skip-validate "$@"
 }
 
-main
-
+main "$@"
