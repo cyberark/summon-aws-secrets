@@ -44,11 +44,19 @@ contributor!
 3. Retrieve the following artifacts from the Jenkins build on the tagged branch,
    and attach them to the release:
    - `SHA256SUMS.txt`
-   - `summon-aws-secrets-x.y.z-darwin-amd64.tar.gz`
-   - `summon-aws-secrets-x.y.z-darwin-arm64.tar.gz`
-   - `summon-aws-secrets-x.y.z-freebsd-amd64.tar.gz`
-   - `summon-aws-secrets-x.y.z-linux-amd64.tar.gz`
-   - `summon-aws-secrets-x.y.z-netbsd-amd64.tar.gz`
-   - `summon-aws-secrets-x.y.z-openbsd-amd64.tar.gz`
-   - `summon-aws-secrets-x.y.z-solaris-amd64.tar.gz`
-   - `summon-aws-secrets-x.y.z-windows-amd64.tar.gz`
+   - `summon-aws-secrets-darwin-amd64.tar.gz`
+   - `summon-aws-secrets-darwin-arm64.tar.gz`
+   - `summon-aws-secrets-freebsd-amd64.tar.gz`
+   - `summon-aws-secrets-linux-amd64.tar.gz`
+   - `summon-aws-secrets-netbsd-amd64.tar.gz`
+   - `summon-aws-secrets-openbsd-amd64.tar.gz`
+   - `summon-aws-secrets-solaris-amd64.tar.gz`
+   - `summon-aws-secrets-windows-amd64.tar.gz`
+
+### Update Homebrew Tools
+
+1. Create a PR in [`cyberark/homebrew-tools`](https://github.com/cyberark/homebrew-tools)
+   to update [`summon-aws-secrets.rb` formula](https://github.com/cyberark/homebrew-tools/blob/master/summon-aws-secrets.rb)
+   using the file `dist/summon-aws-secrets.rb` retrieved from Jenkins artifacts.
+   - Make sure the SHA hashes for the artifacts match the values in the
+     `SHA256SUMS.txt` file attached to the release.
