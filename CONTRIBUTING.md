@@ -14,3 +14,41 @@ For general contribution and community guidelines, please see the [community rep
 From here your pull request will be reviewed and once you've responded to all
 feedback it will be merged into the project. Congratulations, you're a
 contributor!
+
+## Releasing
+
+### Update the version and changelog
+
+1. Examine the changelog and decide on the version bump rank (major, minor, patch).
+2. Change the title of _Unreleased_ section of the changelog to the target version.
+   - Be sure to add the date (ISO 8601 format) to the section header.
+3. Add a new, empty _Unreleased_ section to the changelog.
+   - Remember to update the references at the bottom of the document.
+4. Update `VERSION` and `version.go` files to reflect the version change.
+5. Commit these changes. `Bump version to x.y.z` is an acceptable commit message.
+6. Push your changes to a branch, and get the PR reviewed and merged.
+
+### Tag the version
+
+1. Tag the version on the master branch using `git tag -s vx.y.z -m vx.y.z`.
+   Note this requires you to be able to sign releases. Consult the
+   [GitHub documentation on signing commits](https://docs.github.com/en/authentication/managing-commit-signature-verification)
+   to set this up.
+2. Push the tag: `git push vx.y.z` (or `git push origin vx.y.z` if you are
+   working from your local machine).
+
+### Add a new GitHub release
+
+1. Create a new release from the tag in the GitHub UI.
+2. Add the changelog for the current version to the release description.
+3. Retrieve the following artifacts from the Jenkins build on the tagged branch,
+   and attach them to the release:
+   - `SHA256SUMS.txt`
+   - `summon-aws-secrets-x.y.z-darwin-amd64.tar.gz`
+   - `summon-aws-secrets-x.y.z-darwin-arm64.tar.gz`
+   - `summon-aws-secrets-x.y.z-freebsd-amd64.tar.gz`
+   - `summon-aws-secrets-x.y.z-linux-amd64.tar.gz`
+   - `summon-aws-secrets-x.y.z-netbsd-amd64.tar.gz`
+   - `summon-aws-secrets-x.y.z-openbsd-amd64.tar.gz`
+   - `summon-aws-secrets-x.y.z-solaris-amd64.tar.gz`
+   - `summon-aws-secrets-x.y.z-windows-amd64.tar.gz`
