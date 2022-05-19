@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.4.2] - 2022-05-19
+### Changed
+- Updated to Golang 1.18
+  [cyberark/summon-aws-secrets#60](https://github.com/cyberark/summon-aws-secrets/pull/60)
+
 ## [0.4.1] - 2021-05-10
 ### Added
 - Added a build for Apple Silicon
