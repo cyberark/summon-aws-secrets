@@ -1,4 +1,4 @@
-FROM golang:1.17-stretch
+FROM golang:1.18
 MAINTAINER Conjur Inc
 
 # On CyberArk dev laptops, golang module dependencies are downloaded with a
