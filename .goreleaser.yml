@@ -46,7 +46,7 @@ archives:
 brews:
   - description: AWS Secrets Manager provider for Summon
     homepage: https://github.com/cyberark/summon-aws-secrets
-    url_template: https://github.com/cyberark/summon/releases/download/v{{.Version}}/summon-aws-secrets-{{ tolower .Os }}-{{ tolower .Arch }}.tar.gz
+    url_template: https://github.com/cyberark/summon-aws-secrets/releases/download/v{{.Version}}/summon-aws-secrets-{{ tolower .Os }}-{{ tolower .Arch }}.tar.gz
     install: |
       target = lib/"summon"
       target.install "summon-aws-secrets"
