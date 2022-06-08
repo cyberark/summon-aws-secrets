@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.4.3] - 2022-06-08
+### Changed
+- Updated dependencies in go.mod (github.com/aws/aws-sdk-go -> v1.44.30, 
+  github.com/stretchr/testify -> 1.7.2)
+  [cyberark/summon-aws-secrets#64](https://github.com/cyberark/summon-aws-secrets/pull/64)
+
 ## [0.4.2] - 2022-06-01
 ### Changed
 - Updated to Golang 1.18
