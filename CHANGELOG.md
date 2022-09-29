@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Security
+- Prune old versions of gopkg.in/yaml.v3
+  [cyberark/summon-aws-secrets#66](https://github.com/cyberark/summon-aws-secrets/pull/66)
 - Updated dependencies (aws-sdk-go -> v1.44.106, testify -> 1.8.0) and added replace
   to force golang.org/x/net to latest version for CVE-2022-27664
   [cyberark/summon-aws-secrets#65](https://github.com/cyberark/summon-aws-secrets/pull/65)
