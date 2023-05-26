@@ -1,4 +1,4 @@
-FROM golang:1.18
+FROM golang:1.20
 MAINTAINER Conjur Inc
 
 # On CyberArk dev laptops, golang module dependencies are downloaded with a
@@ -14,6 +14,7 @@ RUN update-ca-certificates
 
 ENV GOOS=linux
 ENV GOARCH=amd64
+ENV GOFLAGS="-buildvcs=false"
 
 EXPOSE 8080
 
