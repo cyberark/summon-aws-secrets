@@ -1,7 +1,8 @@
 #!/usr/bin/env groovy
+@Library("product-pipelines-shared-library") _
 
 pipeline {
-  agent { label 'executor-v2' }
+  agent { label 'conjur-enterprise-common-agent' }
 
   options {
     timestamps()
@@ -14,10 +15,18 @@ pipeline {
 
   stages {
 
+    stage('Get InfraPool AzureExecutorV2 Agent') {
+      steps {
+        script {
+          INFRAPOOL_EXECUTORV2_AGENT_0 = getInfraPoolAgent.connected(type: "ExecutorV2", quantity: 1, duration: 1)[0]
+        }
+      }
+    }
+
     stage('Validate') {
       parallel {
         stage('Changelog') {
-          steps { parseChangelog() }
+          steps { parseChangelog(INFRAPOOL_EXECUTORV2_AGENT_0) }
         }
       }
     }
@@ -29,8 +38,12 @@ pipeline {
             buildingTag()
           }
           steps {
-            sh './bin/build'
-            archiveArtifacts artifacts: 'dist/*', fingerprint: true
+            script {
+              INFRAPOOL_EXECUTORV2_AGENT_0.agentSh './bin/build'
+              INFRAPOOL_EXECUTORV2_AGENT_0.agentStash name: 'dist', includes: 'dist/*'
+              unstash 'dist'
+              archiveArtifacts artifacts: 'dist/*', fingerprint: true
+            }
           }
         }
         stage('Snapshot artifacts') {
@@ -40,8 +53,12 @@ pipeline {
             }
           }
           steps {
-            sh './bin/build --snapshot'
-            archiveArtifacts artifacts: 'dist/*', fingerprint: true
+            script {
+              INFRAPOOL_EXECUTORV2_AGENT_0.agentSh './bin/build --snapshot'
+              INFRAPOOL_EXECUTORV2_AGENT_0.agentStash name: 'dist2', includes: 'dist/*'
+              unstash 'dist2'
+              archiveArtifacts artifacts: 'dist/*', fingerprint: true
+            }
           }
         }
       }
@@ -49,19 +66,23 @@ pipeline {
 
     stage('Run unit tests') {
       steps {
-        sh './bin/test.sh'
-        junit 'output/junit.xml'
-        sh 'sudo chown -R jenkins:jenkins .'  // bad docker mount creates unreadable files TODO fix this
-        cobertura autoUpdateHealth: true, autoUpdateStability: true, coberturaReportFile: 'output/coverage.xml', conditionalCoverageTargets: '30, 0, 0', failUnhealthy: true, failUnstable: false, lineCoverageTargets: '30, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '30, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
-        sh 'mv output/c.out .'
-        ccCoverage("gocov", "--prefix github.com/cyberark/summon-aws-secrets")
+        script {
+          INFRAPOOL_EXECUTORV2_AGENT_0.agentSh './bin/test.sh'
+          INFRAPOOL_EXECUTORV2_AGENT_0.agentStash name: 'output', includes: 'output/*'
+          unstash 'output'
+          junit 'output/junit.xml'
+          INFRAPOOL_EXECUTORV2_AGENT_0.agentSh 'sudo chown -R jenkins:jenkins .'  // bad docker mount creates unreadable files TODO fix this
+          cobertura autoUpdateHealth: true, autoUpdateStability: true, coberturaReportFile: 'output/coverage.xml', conditionalCoverageTargets: '30, 0, 0', failUnhealthy: true, failUnstable: false, lineCoverageTargets: '30, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '30, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
+          sh 'mv output/c.out .'
+          codacy action: 'reportCoverage', filePath: "output/coverage.xml"
+        }
       }
     }
   }
 
   post {
     always {
-      cleanupAndNotify(currentBuild.currentResult)
+      releaseInfraPoolAgent(".infrapool/release_agents")
     }
   }
 }
