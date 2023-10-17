@@ -39,8 +39,6 @@ function repo_root() {
 }
 
 function build_binaries() {
-  git fetch --tags # jenkins does not do this automatically yet
-
   docker-compose build --pull goreleaser
 
   echo "> Building and packaging binaries"
