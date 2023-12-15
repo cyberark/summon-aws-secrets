@@ -39,10 +39,10 @@ function repo_root() {
 }
 
 function build_binaries() {
-  docker-compose build --pull goreleaser
+  docker compose build --pull goreleaser
 
   echo "> Building and packaging binaries"
-  docker-compose run --rm \
+  docker compose run --rm \
     goreleaser release --rm-dist --skip-publish --skip-announce --skip-validate "$@"
 }
 
