@@ -5,7 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.4.3] - 2024-03-21
+
 ### Security
+- Updated Go to 1.22 (CONJSE-1842)
 - Upgrade golang.org/x/net to v0.10.0, golang.org/x/text to v0.9.0, golang.org/x/sys to v0.8.0,
   and Go to 1.20
   [cyberark/summon-aws-secrets#68](https://github.com/cyberark/summon-aws-secrets/pull/68)
@@ -14,9 +18,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Updated dependencies (aws-sdk-go -> v1.44.106, testify -> 1.8.0) and added replace
   to force golang.org/x/net to latest version for CVE-2022-27664
   [cyberark/summon-aws-secrets#65](https://github.com/cyberark/summon-aws-secrets/pull/65)
-
-## [0.4.3] - 2022-06-08
-### Changed
 - Updated dependencies in go.mod (github.com/aws/aws-sdk-go -> v1.44.30, 
   github.com/stretchr/testify -> 1.7.2)
   [cyberark/summon-aws-secrets#64](https://github.com/cyberark/summon-aws-secrets/pull/64)

@@ -11,5 +11,9 @@ FROM goreleaser/goreleaser:latest
 ADD build_ca_certificate /usr/local/share/ca-certificates/
 RUN update-ca-certificates
 
+# Use newer version of Go if version in go.mod is higher
+# than the one in the goreleaser image
+ENV GOTOOLCHAIN=auto
+
 # Workaround for CVE-2022-24765 when running git inside a docker container
 RUN git config --global --add safe.directory /summon-aws-secrets

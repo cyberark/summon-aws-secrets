@@ -1,5 +1,7 @@
 module github.com/cyberark/summon-aws-secrets
 
+go 1.22.1
+
 require (
 	github.com/aws/aws-sdk-go v1.44.106
 	github.com/stretchr/testify v1.8.0
@@ -11,8 +13,6 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-go 1.20
 
 replace golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd => golang.org/x/net v0.10.0
 
