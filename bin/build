@@ -43,7 +43,7 @@ function build_binaries() {
 
   echo "> Building and packaging binaries"
   docker compose run --rm \
-    goreleaser release --rm-dist --skip-publish --skip-announce --skip-validate "$@"
+    goreleaser release --clean --skip=publish,announce,validate "$@"
 }
 
 main "$@"

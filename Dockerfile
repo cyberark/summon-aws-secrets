@@ -1,4 +1,4 @@
-FROM golang:1.20
+FROM golang:1.22
 MAINTAINER Conjur Inc
 
 # On CyberArk dev laptops, golang module dependencies are downloaded with a
