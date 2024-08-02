@@ -1,6 +1,6 @@
 module github.com/cyberark/summon-aws-secrets
 
-go 1.22.1
+go 1.22.5
 
 require (
 	github.com/aws/aws-sdk-go v1.44.106

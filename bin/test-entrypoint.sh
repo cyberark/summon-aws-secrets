@@ -6,6 +6,7 @@ echo "-----"
 go clean -i
 go install
 
+mkdir -p output
 go test --coverprofile=output/c.out -v ./... | tee output/junit.output
 
 cat output/junit.output | go-junit-report > output/junit.xml

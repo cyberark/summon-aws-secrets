@@ -6,6 +6,7 @@ webapp1.json
 junit.xml
 summon-aws-secrets
 secrets.yml
+VERSION
 
 # Editor files
 *.sublime-project

@@ -1,5 +1,5 @@
 FROM golang:1.22
-MAINTAINER Conjur Inc
+LABEL maintainer="CyberArk Software Ltd."
 
 # On CyberArk dev laptops, golang module dependencies are downloaded with a
 # corporate proxy in the middle. For these connections to succeed we need to
