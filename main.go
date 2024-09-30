@@ -2,9 +2,9 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"strings"
-	"fmt"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/ec2metadata"
@@ -101,7 +101,7 @@ func main() {
 
 	switch singleArgmument {
 	case "-v", "--version":
-		os.Stdout.Write([]byte(VERSION))
+		os.Stdout.Write([]byte(FullVersionName))
 	default:
 		RetrieveSecret(singleArgmument)
 	}

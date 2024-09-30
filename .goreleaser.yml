@@ -19,7 +19,22 @@ builds:
       - 'windows'
     goarch:
       - amd64
-    ldflags: []
+    ldflags:
+      - -s -w
+      - -X "github.com/cyberark/summon/pkg/summon.Tag={{ .ShortCommit }}"
+      - -X "github.com/cyberark/summon/pkg/summon.Version={{ .Env.VERSION }}"
+    hooks:
+      post:
+        # Copy the binary out into the <dist> path, and give the copy the name we want
+        # in the release <extra_files>.
+        # e.g. Suppose a windows amd64 build generates a binary at
+        # path/to/binary.exe. This will be copied to
+        # path/to/../binary-windows_amd64.exe. The copy path can then be added to
+        # the release <extra_files> and will result in a release artifact with the name
+        # binary-windows_amd64.exe.
+        - mkdir -p "{{ dir .Path }}/../binaries"
+        - cp "{{ .Path }}" "{{ dir .Path }}/../binaries/summon_{{ .Target }}{{ .Ext }}"
+  
   - id: summon-aws-secrets-arm
     binary: summon-aws-secrets
     env:
@@ -28,7 +43,21 @@ builds:
       - 'darwin'       # MacOS
     goarch:
       - arm64
-    ldflags: []
+    ldflags:
+    - -s -w
+    - -X "github.com/cyberark/summon/pkg/summon.Tag={{ .ShortCommit }}"
+    - -X "github.com/cyberark/summon/pkg/summon.Version={{ .Env.VERSION }}"
+    hooks:
+      post:
+        # Copy the binary out into the <dist> path, and give the copy the name we want
+        # in the release <extra_files>.
+        # e.g. Suppose a windows amd64 build generates a binary at
+        # path/to/binary.exe. This will be copied to
+        # path/to/../binary-windows_amd64.exe. The copy path can then be added to
+        # the release <extra_files> and will result in a release artifact with the name
+        # binary-windows_amd64.exe.
+        - mkdir -p "{{ dir .Path }}/../binaries"
+        - cp "{{ .Path }}" "{{ dir .Path }}/../binaries/summon_{{ .Target }}{{ .Ext }}"
 
 
 archives:
@@ -53,7 +82,7 @@ brews:
     test: |
       system lib/"summon"/"summon-aws-secrets", "-v"
 
-    tap:
+    repository:
       owner: cyberark
       name: homebrew-tools
     skip_upload: true
@@ -61,8 +90,22 @@ brews:
 checksum:
   name_template: 'SHA256SUMS.txt'
 
+dist: ./dist/goreleaser
+
+nfpms:
+  - file_name_template: "{{ .ProjectName }}"
+    vendor: CyberArk
+    homepage: https://github.com/cyberark/summon-aws-secrets
+    maintainer: Conjur Maintainers <conj_maintainers@cyberark.com>
+
+    description: Conjur provider for AWS Secrets
+    recommends:
+      - summon
+    license: MIT
+    formats:
+    - deb
+    - rpm
+    bindir: /usr/local/lib/summon  # where the binary is placed, default summon provider dir
+
 release:
   disable: true
-
-changelog:
-  skip: true
