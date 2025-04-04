@@ -8,7 +8,7 @@ of the license associated with each component.
 
 SECTION 1: Apache License 2.0
 
->>> github.com/aws/aws-sdk-go-1.44.106
+>>> github.com/aws/aws-sdk-go-1.55.6
 >>> github.com/jmespath/go-jmespath-0.4.0
 
 SECTION 2: BSD 2-clause "Simplified" License
@@ -16,7 +16,7 @@ SECTION 2: BSD 2-clause "Simplified" License
 
 SECTION 3: BSD 3-clause "New" or "Revised" License
 
->>> github.com/aws/aws-sdk-go/internal/sync/singleflight-1.44.106
+>>> github.com/aws/aws-sdk-go/internal/sync/singleflight-1.55.6
 
 SECTION 4: MIT License
 
@@ -29,7 +29,7 @@ SECTION 5: ISC License
 
 Apache License 2.0 is applicable to the following component(s).
 
->>> github.com/aws/aws-sdk-go-1.44.106
+>>> github.com/aws/aws-sdk-go-1.55.6
 
 
                                  Apache License
@@ -260,7 +260,7 @@ ISC License is applicable to the following component(s).
 
 BSD 3-clause "New" or "Revised" License is applicable to the following component(s).
 
->>> github.com/aws/aws-sdk-go/internal/sync/singleflight-1.44.106
+>>> github.com/aws/aws-sdk-go/internal/sync/singleflight-1.55.6
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
