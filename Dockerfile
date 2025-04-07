@@ -1,4 +1,4 @@
-FROM golang:1.22
+FROM golang:1.24
 LABEL maintainer="CyberArk Software Ltd."
 
 # On CyberArk dev laptops, golang module dependencies are downloaded with a

@@ -6,12 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [0.4.3] - 2024-09-27
+## [0.4.3] - 2025-04-04
 
 ### Security
-- Updated Go to 1.22 (CONJSE-1842)
-- Upgrade golang.org/x/net to v0.10.0, golang.org/x/text to v0.9.0, golang.org/x/sys to v0.8.0,
-  and Go to 1.20
+- Updated Go to 1.24 (CONJSE-1842)
+- Upgrade golang.org/x/net to v0.10.0, golang.org/x/text to v0.9.0, golang.org/x/sys to v0.8.0
   [cyberark/summon-aws-secrets#68](https://github.com/cyberark/summon-aws-secrets/pull/68)
 - Prune old versions of gopkg.in/yaml.v3
   [cyberark/summon-aws-secrets#66](https://github.com/cyberark/summon-aws-secrets/pull/66)
