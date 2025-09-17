@@ -98,7 +98,7 @@ nfpms:
     homepage: https://github.com/cyberark/summon-aws-secrets
     maintainer: Conjur Maintainers <conj_maintainers@cyberark.com>
 
-    description: Conjur provider for AWS Secrets
+    description: Summon provider for AWS Secrets
     recommends:
       - summon
     license: MIT
