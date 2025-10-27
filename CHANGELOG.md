@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.4.4] - 2025-10-27
+
+### Added
+- Added `close-stale.yml` GitHub workflow
+
 ## [0.4.3] - 2025-09-15
 
 ### Changed
